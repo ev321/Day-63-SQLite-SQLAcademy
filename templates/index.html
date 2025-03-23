@@ -6,10 +6,16 @@
   </head>
   <body>
     <h1>My Library</h1>
+    {% if books %}
     <ul>
-      <li></li>
+        {% for book in books %}
+        <li>{{book.title}} - {{book.author}} - {{book.rating}}/10</li>
+        {% endfor %}
     </ul>
+    {% else %}
+    <p>no books found</p>
+    {% endif %}
 
-    <a href="http://127.0.0.1:5000/add">Add New Book</a>
+    <a href="{{ url_for('add') }}">Add New Book</a>
   </body>
 </html>

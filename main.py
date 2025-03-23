@@ -15,16 +15,25 @@ This will install the packages from requirements.txt for this project.
 
 app = Flask(__name__)
 
-all_books = []
+all_books = []  # Global list to store books
 
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", books=all_books)  # Pass books to the template
 
 
-@app.route("/add")
+@app.route("/add", methods=["GET", "POST"])
 def add():
+    if request.method == 'POST':
+        # Retrieve form data
+        new_book = {
+            'title': request.form.get('title'),
+            'author': request.form.get('author'),
+            'rating': request.form.get('rating')
+        }
+        all_books.append(new_book)  # Append new book to the global list
+        return redirect(url_for('home'))
     return render_template("add.html")
 
 
